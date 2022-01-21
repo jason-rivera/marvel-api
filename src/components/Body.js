@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-var CryptoJS = require("crypto-js");
+var CryptoJS = require("crypto-js"); // same as import CryptoJS from "crypto-js";
 
 const publicKey = process.env.REACT_APP_MARVEL_API_PUBLIC_KEY;
 const privateKey = process.env.REACT_APP_MARVEL_API_PRIVATE_KEY;
@@ -8,15 +8,59 @@ const ts = new Date();
 var message = ts+privateKey+publicKey;
 const hash = CryptoJS.MD5(message);
 
-fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`).then(response => response.json()).then(json => console.log(json.data.results[0].name));
+
+
+
 
 function Body() {
   const [character, setCharacter] = useState('');
-  
+  const [count, setCount] = useState(0);
+  const [offset, setOffset] = useState(570);
+  const [limit, setLimit] = useState(20);
+
+  function updateLimit() {
+    const limit = document.getElementById("limit-box").value;
+    setLimit(limit);
+    console.log(limit);
+  }
+
+  function updateOffset() {
+    const offset = document.getElementById("offset-box").value;
+    setOffset(offset);
+    console.log(offset);
+  }
+
+  useEffect(() => {
+    fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}&offset=${offset}&limit=${limit}`)
+    .then(response => response.json())
+    .then(json => {
+      const index = 12;
+      const imagePath = json.data.results[index].thumbnail.path;
+      const imageExtension = json.data.results[index].thumbnail.extension;
+      const imageFullPath = imagePath + "." + imageExtension;
+
+      document.getElementById("card-image").setAttribute("src", imageFullPath);
+      document.getElementById("card-title").innerHTML = json.data.results[index].name;
+      document.getElementById("card-stories").innerHTML = json.data.results[index].stories.items[0].name.toString();
+    })
+    .catch(error => console.log(error));
+
+    document.title = `You clicked ${count} times`;
+  })
 
   return (
     <div>
-      
+      <div>
+        <input id="search-box" type="text" placeholder="Find Marvel Character"></input>
+        <input id="offset-box" type="text" onChange={updateOffset} placeholder="Set Offset"></input>
+        <input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input>
+      </div>
+      <div>
+        <p>You clicked {count} times</p>
+        <button onClick={() => setCount(count + 1)}>
+          Click me
+        </button>
+      </div>
     </div>
   )
 }
