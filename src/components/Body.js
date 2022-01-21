@@ -1,14 +1,14 @@
 
 var CryptoJS = require("crypto-js");
 
-
-
+const publicKey = "b0ee1b544c9692bdc5fd1c90a64d4c73";
+const privateKey = "ca2939553164aea5e3a8612298e4f8bd86b44002";
 const ts = new Date();
 
 var message = ts+privateKey+publicKey;
 const hash = CryptoJS.MD5(message);
 
-fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`).then(response => response.json()).then(json => console.log(json));
+// fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`).then(response => response.json()).then(json => console.log(json));
 
 console.log("cool");
 
