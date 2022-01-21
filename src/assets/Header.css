@@ -1,0 +1,16 @@
+.container {
+  background-color: red;
+  color: white;
+  text-align: center;
+  font-family: arial;
+  padding: 20px;
+  line-height: 0px;
+}
+
+#title {
+  font-size: 100px;
+}
+
+#sub-title {
+  font-size: 40px;
+}

@@ -1,7 +1,10 @@
+import '../assets/Header.css';
+
 function Header() {
   return (
-    <div>
-      helloasdfasddddddddddf
+    <div class="container">
+      <h1 id="title">MARVEL</h1>
+      <p id="sub-title">Search Engine</p>
     </div>
   )
 }
