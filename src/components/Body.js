@@ -1,4 +1,4 @@
-
+import React, {useState, useEffect} from 'react';
 var CryptoJS = require("crypto-js");
 
 const publicKey = process.env.REACT_APP_MARVEL_API_PUBLIC_KEY;
@@ -8,11 +8,12 @@ const ts = new Date();
 var message = ts+privateKey+publicKey;
 const hash = CryptoJS.MD5(message);
 
-fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`).then(response => response.json()).then(json => console.log(json));
-
-console.log("cool");
+fetch(`https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`).then(response => response.json()).then(json => console.log(json.data.results[0].name));
 
 function Body() {
+  const [character, setCharacter] = useState('');
+  
+
   return (
     <div>
       
