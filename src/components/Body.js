@@ -45,7 +45,7 @@ function Body() {
     .then(json => json.data.results)
     .then(list => list.map(item => {
       let newDiv = document.createElement("div");
-      
+
       newDiv.innerHTML = `
         <p>${item.name}</p>
         <img id="card-image" src="${item.thumbnail.path}.${item.thumbnail.extension}">
@@ -63,8 +63,8 @@ function Body() {
 
 
 
-  useEffect(() => {
-    console.log("use effect used");
+  // useEffect(() => {
+    // console.log("use effect used");
     // fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     // .then(response => response.json())
     // .then(json => json.data.results)
@@ -79,7 +79,7 @@ function Body() {
     //   })
     // })
     // .catch(error => console.log(error));
-  })
+  // })
 
   return (
     <div>
@@ -91,7 +91,7 @@ function Body() {
           </tr>
           <tr>
             <th># of results: </th>
-            <th><input id="offset-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input></th>
+            <th><input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input></th>
           </tr>
         </table>
         <input id="search-button" type="button" onClick={displayCards} value="Search" />
