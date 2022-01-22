@@ -10,7 +10,7 @@ const hash = CryptoJS.MD5(message);
 const baseURL = `https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${ts}`;
 
 function Body() {
-  const [offset, setOffset] = useState(570);
+  const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(20);
   const [resultsList, setResultsList] = useState([]);
 
@@ -66,20 +66,21 @@ function Body() {
 
 
   useEffect(() => {
+    console.log("use effect used");
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
-    .then(json => {
-      const index = 12;
-      const imagePath = json.data.results[index].thumbnail.path;
-      const imageExtension = json.data.results[index].thumbnail.extension;
-      const imageFullPath = imagePath + "." + imageExtension;
-
-      document.getElementById("card-image").setAttribute("src", imageFullPath);
-      document.getElementById("card-title").innerHTML = json.data.results[index].name;
-      document.getElementById("card-stories").innerHTML = json.data.results[index].stories.items[0].name.toString();
+    .then(json => json.data.results)
+    .then(list => {
+      list.map(item => {
+        const imagePath = item.thumbnail.path;
+        const imageExtension = item.thumbnail.extension;
+        const imageFullPath = imagePath + "." + imageExtension;
+        document.getElementById("card-image").setAttribute("src", imageFullPath);
+        document.getElementById("card-title").innerHTML = item.name;
+        document.getElementById("card-stories").innerHTML = item.name.toString();
+      })
     })
     .catch(error => console.log(error));
-
   })
 
   return (
