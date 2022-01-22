@@ -37,22 +37,20 @@ function Body() {
   }
 
   function displayCards() {
+    
     document.getElementById("card-area").innerHTML = "";
 
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
-    .then(json => {
-      setResultsList(json.data.results);
-      console.log(json);
-    })
-    .then(resultsList.map(item => {
+    .then(json => json.data.results)
+    .then(list => list.map(item => {
       let newDiv = document.createElement("div");
-
+      
       newDiv.innerHTML = `
         <p>${item.name}</p>
         <img id="card-image" src="${item.thumbnail.path}.${item.thumbnail.extension}">
-
       `;
+
       document.getElementById("card-area").appendChild(newDiv);
     }))
     .catch(error => console.log(error));
@@ -67,20 +65,20 @@ function Body() {
 
   useEffect(() => {
     console.log("use effect used");
-    fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
-    .then(response => response.json())
-    .then(json => json.data.results)
-    .then(list => {
-      list.map(item => {
-        const imagePath = item.thumbnail.path;
-        const imageExtension = item.thumbnail.extension;
-        const imageFullPath = imagePath + "." + imageExtension;
-        document.getElementById("card-image").setAttribute("src", imageFullPath);
-        document.getElementById("card-title").innerHTML = item.name;
-        document.getElementById("card-stories").innerHTML = item.name.toString();
-      })
-    })
-    .catch(error => console.log(error));
+    // fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
+    // .then(response => response.json())
+    // .then(json => json.data.results)
+    // .then(list => {
+    //   list.map(item => {
+    //     const imagePath = item.thumbnail.path;
+    //     const imageExtension = item.thumbnail.extension;
+    //     const imageFullPath = imagePath + "." + imageExtension;
+    //     document.getElementById("card-image").setAttribute("src", imageFullPath);
+    //     document.getElementById("card-title").innerHTML = item.name;
+    //     document.getElementById("card-stories").innerHTML = item.name.toString();
+    //   })
+    // })
+    // .catch(error => console.log(error));
   })
 
   return (
