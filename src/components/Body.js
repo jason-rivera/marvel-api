@@ -52,13 +52,17 @@ function Body() {
 
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
-    .then(json => json.data.results)
+    .then(json => {
+      console.log(json);
+      return json.data.results;
+    })
     .then(list => list.map(item => {
       let newDiv = document.createElement("div");
-
+      newDiv.className = "card-container";
       newDiv.innerHTML = `
-        <p>${item.name}</p>
+        <p id="character-name">${item.name}</p>
         <img id="card-image" src="${item.thumbnail.path}.${item.thumbnail.extension}">
+        <p id="character-description">${item.description}</p>
       `;
 
       document.getElementById("card-area").appendChild(newDiv);
@@ -95,14 +99,16 @@ function Body() {
     <div>
       <div id="search-container">
         <table id="search-table">
-          <tr>
-            <th>Offset by: </th>
-            <th><input id="offset-box" type="text" onChange={updateOffset} placeholder="Set Offset"></input></th>
-          </tr>
-          <tr>
-            <th># of results: </th>
-            <th><input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input></th>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Offset by: </th>
+              <th><input id="offset-box" type="text" onChange={updateOffset} placeholder="Set Offset"></input></th>
+            </tr>
+            <tr>
+              <th># of results: </th>
+              <th><input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input></th>
+            </tr>
+          </tbody>
         </table>
         <input id="search-button" type="button" onClick={displayCards} value="Search" />
       </div>

@@ -1,0 +1,10 @@
+#navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-button {
+  margin: 20px;
+  padding: 10px;
+}
