@@ -15,8 +15,12 @@ function Body() {
   const [resultsList, setResultsList] = useState([]);
 
   function updateLimit() {
-    const limit = document.getElementById("limit-box").value;
-    setLimit(limit);
+    if (document.getElementById("limit-box").value == null) {
+      setLimit(0);
+    } else {
+      setLimit(document.getElementById("limit-box").value);  
+    }
+        
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
     .then(json => {
@@ -26,8 +30,12 @@ function Body() {
   }
 
   function updateOffset() {
-    const offset = document.getElementById("offset-box").value;
-    setOffset(offset);
+    if (document.getElementById("offset-box").value == null) {
+      setOffset(1);
+    } else {
+      setOffset(document.getElementById("offset-box").value);  
+    }
+
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
     .then(json => {
@@ -39,6 +47,8 @@ function Body() {
   function displayCards() {
     
     document.getElementById("card-area").innerHTML = "";
+    updateLimit();
+    updateOffset();
 
     fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
     .then(response => response.json())
@@ -97,7 +107,7 @@ function Body() {
         <input id="search-button" type="button" onClick={displayCards} value="Search" />
       </div>
 
-      <div id="card-area">-</div>
+      <div id="card-area"></div>
     </div>
   )
 }
