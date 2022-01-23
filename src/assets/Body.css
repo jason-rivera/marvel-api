@@ -19,6 +19,11 @@
   font-weight: bold;
 }
 
+#character-description {
+  font-family: arial;
+  text-align: center;
+}
+
 
 #card-image {
   max-width: 100%;

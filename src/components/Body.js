@@ -12,21 +12,22 @@ const baseURL = `https://gateway.marvel.com:443/v1/public/characters?apikey=${pu
 function Body() {
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(20);
+  const [characterName, setCharacterName] = useState('');
   const [resultsList, setResultsList] = useState([]);
 
   function updateLimit() {
-    if (document.getElementById("limit-box").value == null) {
-      setLimit(0);
+    if (document.getElementById("limit-box").value == null || document.getElementById("limit-box").value == '') {
+      setLimit(20);
     } else {
       setLimit(document.getElementById("limit-box").value);  
     }
         
-    fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
-    .then(response => response.json())
-    .then(json => {
-      setResultsList(json.data.results);
-    })
-    .catch(error => console.log(error));
+    // fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
+    // .then(response => response.json())
+    // .then(json => {
+    //   setResultsList(json.data.results);
+    // })
+    // .catch(error => console.log(error));
   }
 
   function updateOffset() {
@@ -36,21 +37,41 @@ function Body() {
       setOffset(document.getElementById("offset-box").value);  
     }
 
-    fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
-    .then(response => response.json())
-    .then(json => {
-      setResultsList(json.data.results);
-    })
-    .catch(error => console.log(error));
+    // fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
+    // .then(response => response.json())
+    // .then(json => {
+    //   setResultsList(json.data.results);
+    // })
+    // .catch(error => console.log(error));
+  }
+
+  function updateCharacterName() {
+    if (document.getElementById("character-name-box").value == null) {
+      setCharacterName('');
+    } else {
+      setCharacterName(document.getElementById("character-name-box").value);  
+    }
+
+    // fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
+    // .then(response => response.json())
+    // .then(json => {
+    //   setResultsList(json.data.results);
+    // })
+    // .catch(error => console.log(error));
   }
 
   function displayCards() {
     
     document.getElementById("card-area").innerHTML = "";
-    updateLimit();
-    updateOffset();
+    let UrlToFetch = `${baseURL}&offset=${offset}&limit=${limit}`;
 
-    fetch(`${baseURL}&offset=${offset}&limit=${limit}`)
+    if (characterName == null || characterName == '') {
+      UrlToFetch = `${baseURL}&offset=${offset}&limit=${limit}`;
+    } else {
+      UrlToFetch += `&nameStartsWith=${characterName}`;
+    }
+
+    fetch(UrlToFetch)
     .then(response => response.json())
     .then(json => {
       console.log(json);
@@ -102,11 +123,15 @@ function Body() {
           <tbody>
             <tr>
               <th>Offset by: </th>
-              <th><input id="offset-box" type="text" onChange={updateOffset} placeholder="Set Offset"></input></th>
+              <th><input id="offset-box" type="text" onChange={updateOffset} placeholder="Set Offset (min = 1)"></input></th>
             </tr>
             <tr>
               <th># of results: </th>
-              <th><input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit"></input></th>
+              <th><input id="limit-box" type="text" onChange={updateLimit} placeholder="Set Limit (max = 100)"></input></th>
+            </tr>
+            <tr>
+              <th>Character name: </th>
+              <th><input id="character-name-box" type="text" onChange={updateCharacterName} placeholder="Enter name"></input></th>
             </tr>
           </tbody>
         </table>
