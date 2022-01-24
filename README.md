@@ -2,6 +2,7 @@
 #### Step 1. Clone repo
 #### Step 2. 'npm install'
 #### Step 3. 'npm start'
+#### ----------------------------------
 
 ### Overview:
 
