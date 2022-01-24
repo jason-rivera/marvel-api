@@ -1,9 +1,9 @@
 ### Overview:
 
 ### Try it yourself:
-Step 1. Clone repo
-Step 2. 'npm install'
-Step 3. 'npm start'
+### Step 1. Clone repo
+### Step 2. 'npm install'
+### Step 3. 'npm start'
 
 This project is a web application that utilizes the Marvel API to create a search engine for Marvel characters.
 
